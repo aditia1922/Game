@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Pesawat Nontot-Nontot</title> <!-- JUDUL DIGANTI -->
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #000;
+            color: #fff;
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+        }
+        
+        #menu {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 10;
+        }
+        
+        #game-over, #win-screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 10;
+        }
+        
+        h1 {
+            font-size: 48px;
+            color: #ff0;
+            margin-bottom: 30px;
+            text-shadow: 0 0 10px #ff0;
+        }
+        
+        button {
+            padding: 15px 30px;
+            font-size: 24px;
+            background-color: #00f;
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            margin: 10px;
+            transition: all 0.3s;
+        }
+        
+        button:hover {
+            background-color: #00a;
+            transform: scale(1.1);
+        }
+        
+        #game-canvas {
+            display: block;
+            background-color: #000;
+            margin: 0 auto;
+        }
+        
+        #score-display {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            font-size: 24px;
+            color: #fff;
+        }
+        
+        .boss {
+            color: red;
+            font-size: 30px;
+            text-align: center;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px red;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="menu">
+        <h1>PESAWAT NONTOT-NONTOT</h1> <!-- JUDUL DIGANTI -->
+        <button id="start-btn">PLAY</button>
+    </div>
+    
+    <div id="game-over">
+        <h1>GAME OVER</h1>
+        <button id="restart-btn">MAIN LAGI</button>
+    </div>
+    
+    <div id="win-screen">
+        <h1>SELAMAT ANDA MENANG!</h1>
+        <p>Anda mendapatkan hikmahnya: <strong>Nontot</strong></p> <!-- PESAN KEMENANGAN DIGANTI -->
+        <button id="win-restart-btn">MAIN LAGI</button>
+    </div>
+    
+    <div id="score-display">SCORE: 0</div>
+    <div id="boss-warning" class="boss">RAJA PESAWAT MUNCUL!</div>
+    
+    <canvas id="game-canvas"></canvas>
+    
+    <script>
+        // Game setup
+        const canvas = document.getElementById('game-canvas');
+        const ctx = canvas.getContext('2d');
+        const scoreDisplay = document.getElementById('score-display');
+        const menu = document.getElementById('menu');
+        const gameOverScreen = document.getElementById('game-over');
+        const winScreen = document.getElementById('win-screen');
+        const startBtn = document.getElementById('start-btn');
+        const restartBtn = document.getElementById('restart-btn');
+        const winRestartBtn = document.getElementById('win-restart-btn');
+        const bossWarning = document.getElementById('boss-warning');
+        
+        // Set canvas size
+        canvas.width = 800;
+        canvas.height = 600;
+        
+        // Game variables
+        let score = 0;
+        let gameRunning = false;
+        let enemies = [];
+        let bullets = [];
+        let enemyBullets = [];
+        let lastEnemySpawn = 0;
+        let bossActive = false;
+        let bossHealth = 0;
+        
+        // Player object
+        const player = {
+            x: canvas.width / 2 - 25,
+            y: canvas.height - 100,
+            width: 50,
+            height: 50,
+            speed: 5,
+            color: '#0af',
+            lastShot: 0,
+            shootDelay: 300,
+            health: 3,
+            
+            draw: function() {
+                ctx.fillStyle = this.color;
+                // Draw player ship (simple triangle)
+                ctx.beginPath();
+                ctx.moveTo(this.x + this.width/2, this.y);
+                ctx.lineTo(this.x + this.width, this.y + this.height);
+                ctx.lineTo(this.x, this.y + this.height);
+                ctx.closePath();
+                ctx.fill();
+                
+                // Draw cockpit
+                ctx.fillStyle = '#fff';
+                ctx.beginPath();
+                ctx.arc(this.x + this.width/2, this.y + this.height/2, 5, 0, Math.PI * 2);
+                ctx.fill();
+            },
+            
+            update: function() {
+                // Shooting automatically
+                const now = Date.now();
+                if (now - this.lastShot > this.shootDelay) {
+                    this.shoot();
+                    this.lastShot = now;
+                }
+            },
+            
+            shoot: function() {
+                bullets.push({
+                    x: this.x + this.width/2 - 2.5,
+                    y: this.y,
+                    width: 5,
+                    height: 15,
+                    speed: 7,
+                    color: '#0f0'
+                });
+            }
+        };
+        
+        // Boss object
+        const boss = {
+            x: canvas.width / 2 - 75,
+            y: 50,
+            width: 150,
+            height: 80,
+            speed: 2,
+            color: '#f00',
+            health: 10,
+            lastShot: 0,
+            shootDelay: 1000,
+            
+            draw: function() {
+                ctx.fillStyle = this.color;
+                // Draw boss ship
+                ctx.fillRect(this.x, this.y, this.width, this.height);
+                
+                // Draw details
+                ctx.fillStyle = '#000';
+                ctx.fillRect(this.x + 20, this.y + 20, this.width - 40, 20);
+                
+                // Draw health bar
+                ctx.fillStyle = '#f00';
+                ctx.fillRect(this.x + 20, this.y + 10, (this.width - 40) * (this.health / 10), 5);
+            },
+            
+            update: function() {
+                // Move side to side
+                this.x += this.speed;
+                if (this.x <= 0 || this.x + this.width >= canvas.width) {
+                    this.speed *= -1;
+                }
+                
+                // Shoot at player
+                const now = Date.now();
+                if (now - this.lastShot > this.shootDelay) {
+                    this.shoot();
+                    this.lastShot = now;
+                }
+            },
+            
+            shoot: function() {
+                enemyBullets.push({
+                    x: this.x + this.width/2 - 5,
+                    y: this.y + this.height,
+                    width: 10,
+                    height: 20,
+                    speed: 4,
+                    color: '#f00'
+                });
+            }
+        };
+        
+        // Event listeners
+        startBtn.addEventListener('click', startGame);
+        restartBtn.addEventListener('click', startGame);
+        winRestartBtn.addEventListener('click', startGame);
+        
+        // Keyboard controls
+        const keys = {
+            ArrowLeft: false,
+            ArrowRight: false,
+            ArrowUp: false,
+            ArrowDown: false
+        };
+        
+        window.addEventListener('keydown', (e) => {
+            if (keys.hasOwnProperty(e.key)) {
+                keys[e.key] = true;
+            }
+        });
+        
+        window.addEventListener('keyup', (e) => {
+            if (keys.hasOwnProperty(e.key)) {
+                keys[e.key] = false;
+            }
+        });
+        
+        // Start game function
+        function startGame() {
+            score = 0;
+            player.health = 3;
+            enemies = [];
+            bullets = [];
+            enemyBullets = [];
+            bossActive = false;
+            bossWarning.style.display = 'none';
+            
+            menu.style.display = 'none';
+            gameOverScreen.style.display = 'none';
+            winScreen.style.display = 'none';
+            
+            gameRunning = true;
+            
+            // Reset player position
+            player.x = canvas.width / 2 - 25;
+            player.y = canvas.height - 100;
+            
+            // Start game loop
+            gameLoop();
+        }
+        
+        // Game loop
+        function gameLoop() {
+            if (!gameRunning) return;
+            
+            update();
+            render();
+            
+            requestAnimationFrame(gameLoop);
+        }
+        
+        // Update game state
+        function update() {
+            // Update player position based on keyboard input
+            if (keys.ArrowLeft && player.x > 0) {
+                player.x -= player.speed;
+            }
+            if (keys.ArrowRight && player.x + player.width < canvas.width) {
+                player.x += player.speed;
+            }
+            if (keys.ArrowUp && player.y > 0) {
+                player.y -= player.speed;
+            }
+            if (keys.ArrowDown && player.y + player.height < canvas.height) {
+                player.y += player.speed;
+            }
+            
+            // Update player
+            player.update();
+            
+            // Spawn enemies
+            const now = Date.now();
+            if (!bossActive && now - lastEnemySpawn > 1000 && enemies.length < 5) {
+                spawnEnemy();
+                lastEnemySpawn = now;
+            }
+            
+            // Update enemies
+            for (let i = enemies.length - 1; i >= 0; i--) {
+                enemies[i].y += enemies[i].speed;
+                
+                // Remove enemies that go off screen
+                if (enemies[i].y > canvas.height) {
+                    enemies.splice(i, 1);
+                }
+            }
+            
+            // Update bullets
+            for (let i = bullets.length - 1; i >= 0; i--) {
+                bullets[i].y -= bullets[i].speed;
+                
+                // Remove bullets that go off screen
+                if (bullets[i].y < 0) {
+                    bullets.splice(i, 1);
+                }
+            }
+            
+            // Update enemy bullets
+            for (let i = enemyBullets.length - 1; i >= 0; i--) {
+                enemyBullets[i].y += enemyBullets[i].speed;
+                
+                // Remove bullets that go off screen
+                if (enemyBullets[i].y > canvas.height) {
+                    enemyBullets.splice(i, 1);
+                }
+            }
+            
+            // Check for bullet-enemy collisions
+            for (let i = bullets.length - 1; i >= 0; i--) {
+                for (let j = enemies.length - 1; j >= 0; j--) {
+                    if (checkCollision(bullets[i], enemies[j])) {
+                        bullets.splice(i, 1);
+                        enemies.splice(j, 1);
+                        score++;
+                        updateScore();
+                        
+                        // Check for boss spawn
+                        if (score >= 10 && !bossActive) {
+                            spawnBoss();
+                        }
+                        
+                        break;
+                    }
+                }
+                
+                // Check for bullet-boss collisions
+                if (bossActive && bullets[i] && checkCollision(bullets[i], boss)) {
+                    bullets.splice(i, 1);
+                    boss.health--;
+                    
+                    if (boss.health <= 0) {
+                        bossActive = false;
+                        winGame();
+                    }
+                    
+                    break;
+                }
+            }
+            
+            // Check for enemy-player collisions
+            for (let i = enemies.length - 1; i >= 0; i--) {
+                if (checkCollision(player, enemies[i])) {
+                    enemies.splice(i, 1);
+                    player.health--;
+                    
+                    if (player.health <= 0) {
+                        gameOver();
+                    }
+                }
+            }
+            
+            // Check for enemy bullet-player collisions
+            for (let i = enemyBullets.length - 1; i >= 0; i--) {
+                if (checkCollision(player, enemyBullets[i])) {
+                    enemyBullets.splice(i, 1);
+                    player.health--;
+                    
+                    if (player.health <= 0) {
+                        gameOver();
+                    }
+                }
+            }
+            
+            // Update boss
+            if (bossActive) {
+                boss.update();
+            }
+        }
+        
+        // Render game
+        function render() {
+            // Clear canvas
+            ctx.fillStyle = '#000';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            // Draw player
+            player.draw();
+            
+            // Draw enemies
+            enemies.forEach(enemy => {
+                drawEnemy(enemy);
+            });
+            
+            // Draw bullets
+            bullets.forEach(bullet => {
+                ctx.fillStyle = bullet.color;
+                ctx.fillRect(bullet.x, bullet.y, bullet.width, bullet.height);
+            });
+            
+            // Draw enemy bullets
+            enemyBullets.forEach(bullet => {
+                ctx.fillStyle = bullet.color;
+                ctx.fillRect(bullet.x, bullet.y, bullet.width, bullet.height);
+            });
+            
+            // Draw boss
+            if (bossActive) {
+                boss.draw();
+            }
+            
+            // Draw player health
+            ctx.fillStyle = '#fff';
+            ctx.font = '20px Arial';
+            ctx.fillText(`Health: ${player.health}`, canvas.width - 120, 30);
+        }
+        
+        // Spawn enemy
+        function spawnEnemy() {
+            const size = Math.random() * 20 + 20;
+            enemies.push({
+                x: Math.random() * (canvas.width - size),
+                y: -size,
+                width: size,
+                height: size,
+                speed: Math.random() * 2 + 1,
+                color: `hsl(${Math.random() * 360}, 100%, 50%)`
+            });
+        }
+        
+        // Draw enemy
+        function drawEnemy(enemy) {
+            ctx.fillStyle = enemy.color;
+            // Simple enemy shape (inverted triangle)
+            ctx.beginPath();
+            ctx.moveTo(enemy.x + enemy.width/2, enemy.y + enemy.height);
+            ctx.lineTo(enemy.x + enemy.width, enemy.y);
+            ctx.lineTo(enemy.x, enemy.y);
+            ctx.closePath();
+            ctx.fill();
+        }
+        
+        // Check collision between two objects
+        function checkCollision(obj1, obj2) {
+            return obj1.x < obj2.x + obj2.width &&
+                   obj1.x + obj1.width > obj2.x &&
+                   obj1.y < obj2.y + obj2.height &&
+                   obj1.y + obj1.height > obj2.y;
+        }
+        
+        // Update score display
+        function updateScore() {
+            document.getElementById('score-display').textContent = `SCORE: ${score}`;
+        }
+        
+        // Spawn boss
+        function spawnBoss() {
+            bossActive = true;
+            boss.health = 10;
+            bossWarning.style.display = 'block';
+            
+            // Clear all enemies
+            enemies = [];
+        }
+        
+        // Game over
+        function gameOver() {
+            gameRunning = false;
+            gameOverScreen.style.display = 'flex';
+        }
+        
+        // Win game
+        function winGame() {
+            gameRunning = false;
+            winScreen.style.display = 'flex';
+        }
+    </script>
+</body>
+</html>

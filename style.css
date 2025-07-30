@@ -1,0 +1,7 @@
+    /* Tambahkan ini ke bagian <style> */
+    #game-canvas {
+        width: 100vw; /* Lebar 100% dari viewport */
+        height: 100vh; /* Tinggi 100% dari viewport */
+        object-fit: cover; /* Memastikan canvas mengisi area tanpa distorsi */
+    }
+    
