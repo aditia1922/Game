@@ -1,520 +1,462 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Game Pesawat Nontot-Nontot</title> <!-- JUDUL DIGANTI -->
+    <title>Masjid Al-Istiqomah - Website Resmi</title>
     <style>
-        body {
+        /* Reset dan gaya dasar */
+        * {
             margin: 0;
             padding: 0;
-            background-color: #000;
-            color: #fff;
-            font-family: Arial, sans-serif;
-            overflow: hidden;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         
-        #menu {
-            position: absolute;
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        /* Header dan navigasi */
+        header {
+            background-color: #2e7d32;
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
             top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            background-color: rgba(0, 0, 0, 0.8);
-            z-index: 10;
+            z-index: 100;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
         
-        #game-over, #win-screen {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            display: none;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            background-color: rgba(0, 0, 0, 0.9);
-            z-index: 10;
-        }
-        
-        h1 {
-            font-size: 48px;
-            color: #ff0;
-            margin-bottom: 30px;
-            text-shadow: 0 0 10px #ff0;
-        }
-        
-        button {
-            padding: 15px 30px;
-            font-size: 24px;
-            background-color: #00f;
-            color: #fff;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            margin: 10px;
-            transition: all 0.3s;
-        }
-        
-        button:hover {
-            background-color: #00a;
-            transform: scale(1.1);
-        }
-        
-        #game-canvas {
-            display: block;
-            background-color: #000;
+        .container {
+            width: 90%;
+            max-width: 1200px;
             margin: 0 auto;
         }
         
-        #score-display {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            font-size: 24px;
-            color: #fff;
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
         
-        .boss {
-            color: red;
-            font-size: 30px;
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo img {
+            height: 50px;
+            margin-right: 15px;
+        }
+        
+        .logo h1 {
+            font-size: 1.8rem;
+            font-weight: 600;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            padding: 5px 10px;
+            border-radius: 4px;
+        }
+        
+        nav ul li a:hover {
+            background-color: rgba(255,255,255,0.1);
+        }
+        
+        /* Hero section */
+        .hero {
+            background: linear-gradient(rgba(46, 125, 50, 0.8), rgba(46, 125, 50, 0.9)), url('https://images.unsplash.com/photo-1549923746-c502d488b3ea?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 4rem 0;
             text-align: center;
-            margin-bottom: 20px;
-            text-shadow: 0 0 10px red;
-            display: none;
+        }
+        
+        .hero h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: #ff9800;
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+        
+        .btn:hover {
+            background-color: #f57c00;
+        }
+        
+        /* Section umum */
+        section {
+            padding: 3rem 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: #2e7d32;
+            font-size: 2rem;
+        }
+        
+        /* Tentang kami */
+        .about {
+            background-color: white;
+        }
+        
+        .about-content {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 2rem;
+        }
+        
+        .about-text {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .about-image {
+            flex: 1;
+            min-width: 300px;
+            text-align: center;
+        }
+        
+        .about-image img {
+            max-width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        /* Layanan */
+        .services {
+            background-color: #f9f9f9;
+        }
+        
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .service-card {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+            text-align: center;
+            transition: transform 0.3s;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .service-icon {
+            font-size: 3rem;
+            color: #2e7d32;
+            margin-bottom: 1rem;
+        }
+        
+        .service-card h3 {
+            margin-bottom: 1rem;
+            color: #2e7d32;
+        }
+        
+        /* Berita dan kegiatan */
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .news-card {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+        }
+        
+        .news-image {
+            height: 200px;
+            overflow: hidden;
+        }
+        
+        .news-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        .news-card:hover .news-image img {
+            transform: scale(1.05);
+        }
+        
+        .news-content {
+            padding: 1.5rem;
+        }
+        
+        .news-date {
+            color: #777;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: #1b5e20;
+            color: white;
+            padding: 3rem 0 1rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+        
+        .footer-section ul {
+            list-style: none;
+        }
+        
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .footer-section ul li a {
+            color: #ddd;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-section ul li a:hover {
+            color: white;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            font-size: 0.9rem;
+            color: #ccc;
+        }
+        
+        /* Responsif */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 0.5rem;
+            }
+            
+            .hero h2 {
+                font-size: 2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
         }
     </style>
 </head>
 <body>
-    <div id="menu">
-        <h1>PESAWAT NONTOT-NONTOT</h1> <!-- JUDUL DIGANTI -->
-        <button id="start-btn">PLAY</button>
-    </div>
-    
-    <div id="game-over">
-        <h1>GAME OVER</h1>
-        <button id="restart-btn">MAIN LAGI</button>
-    </div>
-    
-    <div id="win-screen">
-        <h1>SELAMAT ANDA MENANG!</h1>
-        <p>Anda mendapatkan hikmahnya: <strong>Nontot</strong></p> <!-- PESAN KEMENANGAN DIGANTI -->
-        <button id="win-restart-btn">MAIN LAGI</button>
-    </div>
-    
-    <div id="score-display">SCORE: 0</div>
-    <div id="boss-warning" class="boss">RAJA PESAWAT MUNCUL!</div>
-    
-    <canvas id="game-canvas"></canvas>
-    
-    <script>
-        // Game setup
-        const canvas = document.getElementById('game-canvas');
-        const ctx = canvas.getContext('2d');
-        const scoreDisplay = document.getElementById('score-display');
-        const menu = document.getElementById('menu');
-        const gameOverScreen = document.getElementById('game-over');
-        const winScreen = document.getElementById('win-screen');
-        const startBtn = document.getElementById('start-btn');
-        const restartBtn = document.getElementById('restart-btn');
-        const winRestartBtn = document.getElementById('win-restart-btn');
-        const bossWarning = document.getElementById('boss-warning');
-        
-        // Set canvas size
-        canvas.width = 800;
-        canvas.height = 600;
-        
-        // Game variables
-        let score = 0;
-        let gameRunning = false;
-        let enemies = [];
-        let bullets = [];
-        let enemyBullets = [];
-        let lastEnemySpawn = 0;
-        let bossActive = false;
-        let bossHealth = 0;
-        
-        // Player object
-        const player = {
-            x: canvas.width / 2 - 25,
-            y: canvas.height - 100,
-            width: 50,
-            height: 50,
-            speed: 5,
-            color: '#0af',
-            lastShot: 0,
-            shootDelay: 300,
-            health: 3,
-            
-            draw: function() {
-                ctx.fillStyle = this.color;
-                // Draw player ship (simple triangle)
-                ctx.beginPath();
-                ctx.moveTo(this.x + this.width/2, this.y);
-                ctx.lineTo(this.x + this.width, this.y + this.height);
-                ctx.lineTo(this.x, this.y + this.height);
-                ctx.closePath();
-                ctx.fill();
-                
-                // Draw cockpit
-                ctx.fillStyle = '#fff';
-                ctx.beginPath();
-                ctx.arc(this.x + this.width/2, this.y + this.height/2, 5, 0, Math.PI * 2);
-                ctx.fill();
-            },
-            
-            update: function() {
-                // Shooting automatically
-                const now = Date.now();
-                if (now - this.lastShot > this.shootDelay) {
-                    this.shoot();
-                    this.lastShot = now;
-                }
-            },
-            
-            shoot: function() {
-                bullets.push({
-                    x: this.x + this.width/2 - 2.5,
-                    y: this.y,
-                    width: 5,
-                    height: 15,
-                    speed: 7,
-                    color: '#0f0'
-                });
-            }
-        };
-        
-        // Boss object
-        const boss = {
-            x: canvas.width / 2 - 75,
-            y: 50,
-            width: 150,
-            height: 80,
-            speed: 2,
-            color: '#f00',
-            health: 10,
-            lastShot: 0,
-            shootDelay: 1000,
-            
-            draw: function() {
-                ctx.fillStyle = this.color;
-                // Draw boss ship
-                ctx.fillRect(this.x, this.y, this.width, this.height);
-                
-                // Draw details
-                ctx.fillStyle = '#000';
-                ctx.fillRect(this.x + 20, this.y + 20, this.width - 40, 20);
-                
-                // Draw health bar
-                ctx.fillStyle = '#f00';
-                ctx.fillRect(this.x + 20, this.y + 10, (this.width - 40) * (this.health / 10), 5);
-            },
-            
-            update: function() {
-                // Move side to side
-                this.x += this.speed;
-                if (this.x <= 0 || this.x + this.width >= canvas.width) {
-                    this.speed *= -1;
-                }
-                
-                // Shoot at player
-                const now = Date.now();
-                if (now - this.lastShot > this.shootDelay) {
-                    this.shoot();
-                    this.lastShot = now;
-                }
-            },
-            
-            shoot: function() {
-                enemyBullets.push({
-                    x: this.x + this.width/2 - 5,
-                    y: this.y + this.height,
-                    width: 10,
-                    height: 20,
-                    speed: 4,
-                    color: '#f00'
-                });
-            }
-        };
-        
-        // Event listeners
-        startBtn.addEventListener('click', startGame);
-        restartBtn.addEventListener('click', startGame);
-        winRestartBtn.addEventListener('click', startGame);
-        
-        // Keyboard controls
-        const keys = {
-            ArrowLeft: false,
-            ArrowRight: false,
-            ArrowUp: false,
-            ArrowDown: false
-        };
-        
-        window.addEventListener('keydown', (e) => {
-            if (keys.hasOwnProperty(e.key)) {
-                keys[e.key] = true;
-            }
-        });
-        
-        window.addEventListener('keyup', (e) => {
-            if (keys.hasOwnProperty(e.key)) {
-                keys[e.key] = false;
-            }
-        });
-        
-        // Start game function
-        function startGame() {
-            score = 0;
-            player.health = 3;
-            enemies = [];
-            bullets = [];
-            enemyBullets = [];
-            bossActive = false;
-            bossWarning.style.display = 'none';
-            
-            menu.style.display = 'none';
-            gameOverScreen.style.display = 'none';
-            winScreen.style.display = 'none';
-            
-            gameRunning = true;
-            
-            // Reset player position
-            player.x = canvas.width / 2 - 25;
-            player.y = canvas.height - 100;
-            
-            // Start game loop
-            gameLoop();
-        }
-        
-        // Game loop
-        function gameLoop() {
-            if (!gameRunning) return;
-            
-            update();
-            render();
-            
-            requestAnimationFrame(gameLoop);
-        }
-        
-        // Update game state
-        function update() {
-            // Update player position based on keyboard input
-            if (keys.ArrowLeft && player.x > 0) {
-                player.x -= player.speed;
-            }
-            if (keys.ArrowRight && player.x + player.width < canvas.width) {
-                player.x += player.speed;
-            }
-            if (keys.ArrowUp && player.y > 0) {
-                player.y -= player.speed;
-            }
-            if (keys.ArrowDown && player.y + player.height < canvas.height) {
-                player.y += player.speed;
-            }
-            
-            // Update player
-            player.update();
-            
-            // Spawn enemies
-            const now = Date.now();
-            if (!bossActive && now - lastEnemySpawn > 1000 && enemies.length < 5) {
-                spawnEnemy();
-                lastEnemySpawn = now;
-            }
-            
-            // Update enemies
-            for (let i = enemies.length - 1; i >= 0; i--) {
-                enemies[i].y += enemies[i].speed;
-                
-                // Remove enemies that go off screen
-                if (enemies[i].y > canvas.height) {
-                    enemies.splice(i, 1);
-                }
-            }
-            
-            // Update bullets
-            for (let i = bullets.length - 1; i >= 0; i--) {
-                bullets[i].y -= bullets[i].speed;
-                
-                // Remove bullets that go off screen
-                if (bullets[i].y < 0) {
-                    bullets.splice(i, 1);
-                }
-            }
-            
-            // Update enemy bullets
-            for (let i = enemyBullets.length - 1; i >= 0; i--) {
-                enemyBullets[i].y += enemyBullets[i].speed;
-                
-                // Remove bullets that go off screen
-                if (enemyBullets[i].y > canvas.height) {
-                    enemyBullets.splice(i, 1);
-                }
-            }
-            
-            // Check for bullet-enemy collisions
-            for (let i = bullets.length - 1; i >= 0; i--) {
-                for (let j = enemies.length - 1; j >= 0; j--) {
-                    if (checkCollision(bullets[i], enemies[j])) {
-                        bullets.splice(i, 1);
-                        enemies.splice(j, 1);
-                        score++;
-                        updateScore();
-                        
-                        // Check for boss spawn
-                        if (score >= 10 && !bossActive) {
-                            spawnBoss();
-                        }
-                        
-                        break;
-                    }
-                }
-                
-                // Check for bullet-boss collisions
-                if (bossActive && bullets[i] && checkCollision(bullets[i], boss)) {
-                    bullets.splice(i, 1);
-                    boss.health--;
-                    
-                    if (boss.health <= 0) {
-                        bossActive = false;
-                        winGame();
-                    }
-                    
-                    break;
-                }
-            }
-            
-            // Check for enemy-player collisions
-            for (let i = enemies.length - 1; i >= 0; i--) {
-                if (checkCollision(player, enemies[i])) {
-                    enemies.splice(i, 1);
-                    player.health--;
-                    
-                    if (player.health <= 0) {
-                        gameOver();
-                    }
-                }
-            }
-            
-            // Check for enemy bullet-player collisions
-            for (let i = enemyBullets.length - 1; i >= 0; i--) {
-                if (checkCollision(player, enemyBullets[i])) {
-                    enemyBullets.splice(i, 1);
-                    player.health--;
-                    
-                    if (player.health <= 0) {
-                        gameOver();
-                    }
-                }
-            }
-            
-            // Update boss
-            if (bossActive) {
-                boss.update();
-            }
-        }
-        
-        // Render game
-        function render() {
-            // Clear canvas
-            ctx.fillStyle = '#000';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            
-            // Draw player
-            player.draw();
-            
-            // Draw enemies
-            enemies.forEach(enemy => {
-                drawEnemy(enemy);
-            });
-            
-            // Draw bullets
-            bullets.forEach(bullet => {
-                ctx.fillStyle = bullet.color;
-                ctx.fillRect(bullet.x, bullet.y, bullet.width, bullet.height);
-            });
-            
-            // Draw enemy bullets
-            enemyBullets.forEach(bullet => {
-                ctx.fillStyle = bullet.color;
-                ctx.fillRect(bullet.x, bullet.y, bullet.width, bullet.height);
-            });
-            
-            // Draw boss
-            if (bossActive) {
-                boss.draw();
-            }
-            
-            // Draw player health
-            ctx.fillStyle = '#fff';
-            ctx.font = '20px Arial';
-            ctx.fillText(`Health: ${player.health}`, canvas.width - 120, 30);
-        }
-        
-        // Spawn enemy
-        function spawnEnemy() {
-            const size = Math.random() * 20 + 20;
-            enemies.push({
-                x: Math.random() * (canvas.width - size),
-                y: -size,
-                width: size,
-                height: size,
-                speed: Math.random() * 2 + 1,
-                color: `hsl(${Math.random() * 360}, 100%, 50%)`
-            });
-        }
-        
-        // Draw enemy
-        function drawEnemy(enemy) {
-            ctx.fillStyle = enemy.color;
-            // Simple enemy shape (inverted triangle)
-            ctx.beginPath();
-            ctx.moveTo(enemy.x + enemy.width/2, enemy.y + enemy.height);
-            ctx.lineTo(enemy.x + enemy.width, enemy.y);
-            ctx.lineTo(enemy.x, enemy.y);
-            ctx.closePath();
-            ctx.fill();
-        }
-        
-        // Check collision between two objects
-        function checkCollision(obj1, obj2) {
-            return obj1.x < obj2.x + obj2.width &&
-                   obj1.x + obj1.width > obj2.x &&
-                   obj1.y < obj2.y + obj2.height &&
-                   obj1.y + obj1.height > obj2.y;
-        }
-        
-        // Update score display
-        function updateScore() {
-            document.getElementById('score-display').textContent = `SCORE: ${score}`;
-        }
-        
-        // Spawn boss
-        function spawnBoss() {
-            bossActive = true;
-            boss.health = 10;
-            bossWarning.style.display = 'block';
-            
-            // Clear all enemies
-            enemies = [];
-        }
-        
-        // Game over
-        function gameOver() {
-            gameRunning = false;
-            gameOverScreen.style.display = 'flex';
-        }
-        
-        // Win game
-        function winGame() {
-            gameRunning = false;
-            winScreen.style.display = 'flex';
-        }
-    </script>
+    <!-- Header dan Navigasi -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <img src="logo-masjid.jpg" alt="Logo Masjid Al-Istiqomah">
+                    <h1>Masjid Al-Istiqomah</h1>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="#beranda">Beranda</a></li>
+                        <li><a href="#profil">Profil</a></li>
+                        <li><a href="#berita">Berita</a></li>
+                        <li><a href="#kegiatan">Kegiatan</a></li>
+                        <li><a href="#perpustakaan">Perpustakaan</a></li>
+                        <li><a href="#informasi">Informasi</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="beranda" class="hero">
+        <div class="container">
+            <h2>Selamat Datang di Website Resmi Masjid Al-Istiqomah</h2>
+            <p>Sebagai pusat kegiatan keislaman, kami berkomitmen untuk menyediakan layanan terbaik bagi jamaah dan masyarakat sekitar. Mari bersama-sama membangun peradaban Islam yang lebih baik.</p>
+            <a href="#profil" class="btn">Pelajari Lebih Lanjut</a>
+        </div>
+    </section>
+
+    <!-- Tentang Kami -->
+    <section id="profil" class="about">
+        <div class="container">
+            <h2 class="section-title">Tentang Masjid Al-Istiqomah</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>Masjid Al-Istiqomah adalah tempat ibadah umat Islam yang berlokasi di jantung kota. Didirikan pada tahun 1985, masjid ini telah menjadi pusat kegiatan keagamaan, pendidikan, dan sosial bagi masyarakat sekitar.</p>
+                    <p>Kami memiliki berbagai program unggulan seperti pengajian rutin, pendidikan anak, bantuan sosial, dan kegiatan kemasyarakatan lainnya. Dengan semangat untuk selalu istiqomah dalam kebaikan, kami berharap dapat terus memberikan manfaat bagi umat.</p>
+                    <p>Pengurus masjid terdiri dari para ulama, akademisi, dan profesional yang berkomitmen untuk mengembangkan masjid sebagai pusat peradaban Islam modern.</p>
+                </div>
+                <div class="about-image">
+                    <img src="masjid-exterior.jpg" alt="Eksterior Masjid Al-Istiqomah">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Layanan -->
+    <section class="services">
+        <div class="container">
+            <h2 class="section-title">Layanan Kami</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">🕌</div>
+                    <h3>Ibadah</h3>
+                    <p>Menyediakan fasilitas ibadah yang nyaman untuk shalat berjamaah, shalat Jumat, dan kegiatan ibadah lainnya.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">📚</div>
+                    <h3>Pendidikan</h3>
+                    <p>Program pengajian rutin, TPA/TPQ, kajian kitab, dan pelatihan keislaman untuk semua usia.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🤝</div>
+                    <h3>Sosial</h3>
+                    <p>Kegiatan bakti sosial, santunan anak yatim, bantuan untuk masyarakat kurang mampu, dan program sosial lainnya.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Berita -->
+    <section id="berita" class="news">
+        <div class="container">
+            <h2 class="section-title">Berita Terkini</h2>
+            <div class="news-grid">
+                <div class="news-card">
+                    <div class="news-image">
+                        <img src="kegiatan1.jpg" alt="Kegiatan Masjid">
+                    </div>
+                    <div class="news-content">
+                        <div class="news-date">15 Oktober 2023</div>
+                        <h3>Pengajian Rutin Bulanan Masjid Al-Istiqomah</h3>
+                        <p>Masjid Al-Istiqomah akan mengadakan pengajian rutin bulanan dengan tema "Menjaga Istiqomah di Era Modern".</p>
+                    </div>
+                </div>
+                <div class="news-card">
+                    <div class="news-image">
+                        <img src="kegiatan2.jpg" alt="Kegiatan Masjid">
+                    </div>
+                    <div class="news-content">
+                        <div class="news-date">10 Oktober 2023</div>
+                        <h3>Pembagian Sembako untuk Warga Kurang Mampu</h3>
+                        <p>Dalam rangka memperingati Maulid Nabi, masjid akan membagikan sembako kepada 100 keluarga kurang mampu.</p>
+                    </div>
+                </div>
+                <div class="news-card">
+                    <div class="news-image">
+                        <img src="kegiatan3.jpg" alt="Kegiatan Masjid">
+                    </div>
+                    <div class="news-content">
+                        <div class="news-date">5 Oktober 2023</div>
+                        <h3>Pendaftaran TPQ Masjid Al-Istiqomah Tahun Ajaran Baru</h3>
+                        <p>Dibuka pendaftaran siswa baru TPQ Masjid Al-Istiqomah untuk tahun ajaran 2023/2024.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Kontak Kami</h3>
+                    <p>Jl. Merdeka No. 123, Jakarta Pusat</p>
+                    <p>Telepon: (021) 123-4567</p>
+                    <p>Email: info@masjidalistiqomah.id</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Layanan</h3>
+                    <ul>
+                        <li><a href="#">Jadwal Sholat</a></li>
+                        <li><a href="#">Kajian Online</a></li>
+                        <li><a href="#">Donasi Online</a></li>
+                        <li><a href="#">Perpustakaan Digital</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Bantuan</h3>
+                    <ul>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Kebijakan Privasi</a></li>
+                        <li><a href="#">Syarat dan Ketentuan</a></li>
+                        <li><a href="#">Hubungi Kami</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Tautan Cepat</h3>
+                    <ul>
+                        <li><a href="#beranda">Beranda</a></li>
+                        <li><a href="#profil">Profil</a></li>
+                        <li><a href="#berita">Berita</a></li>
+                        <li><a href="#kegiatan">Kegiatan</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 Masjid Al-Istiqomah. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
 </body>
 </html>
