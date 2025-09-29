@@ -14,20 +14,22 @@
         }
         
         body {
-            background-color: #f5f5f5;
+            background-color: #f8f9fa;
             color: #333;
             line-height: 1.6;
+            scroll-behavior: smooth;
+            overflow-x: hidden;
         }
         
         /* Header dan navigasi */
         header {
-            background-color: #2e7d32;
+            background: linear-gradient(135deg, #1b5e20 0%, #2e7d32 100%);
             color: white;
             padding: 1rem 0;
             position: sticky;
             top: 0;
-            z-index: 100;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
         }
         
         .container {
@@ -50,11 +52,14 @@
         .logo img {
             height: 50px;
             margin-right: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
         }
         
         .logo h1 {
             font-size: 1.8rem;
             font-weight: 600;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
         }
         
         nav ul {
@@ -70,61 +75,127 @@
             color: white;
             text-decoration: none;
             font-weight: 500;
-            transition: color 0.3s;
-            padding: 5px 10px;
-            border-radius: 4px;
+            transition: all 0.3s;
+            padding: 8px 15px;
+            border-radius: 30px;
+            position: relative;
+            overflow: hidden;
         }
         
-        nav ul li a:hover {
-            background-color: rgba(255,255,255,0.1);
+        nav ul li a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: rgba(255,255,255,0.1);
+            transition: all 0.4s;
+            z-index: -1;
+        }
+        
+        nav ul li a:hover::before {
+            left: 0;
+        }
+        
+        nav ul li a.active {
+            background-color: rgba(255,255,255,0.2);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
         
         /* Hero section */
         .hero {
-            background: linear-gradient(rgba(46, 125, 50, 0.8), rgba(46, 125, 50, 0.9)), url('https://images.unsplash.com/photo-1549923746-c502d488b3ea?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background: linear-gradient(rgba(46, 125, 50, 0.85), rgba(46, 125, 50, 0.9)), url('assets/images/hero-bg.jpg');
             background-size: cover;
             background-position: center;
             color: white;
-            padding: 4rem 0;
+            padding: 5rem 0;
             text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(46, 125, 50, 0.4), rgba(27, 94, 32, 0.6));
+            z-index: 1;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            margin: 0 auto;
         }
         
         .hero h2 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
+            font-size: 2.8rem;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+            animation: fadeInUp 1s ease-out;
         }
         
         .hero p {
             font-size: 1.2rem;
-            max-width: 800px;
-            margin: 0 auto 2rem;
+            margin-bottom: 2rem;
+            animation: fadeInUp 1s ease-out 0.2s both;
         }
         
         .btn {
             display: inline-block;
-            background-color: #ff9800;
+            background: linear-gradient(135deg, #ff9800 0%, #f57c00 100%);
             color: white;
-            padding: 0.8rem 1.5rem;
-            border-radius: 5px;
+            padding: 1rem 2rem;
+            border-radius: 30px;
             text-decoration: none;
             font-weight: 600;
-            transition: background-color 0.3s;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            animation: fadeInUp 1s ease-out 0.4s both;
         }
         
         .btn:hover {
-            background-color: #f57c00;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.3);
         }
         
         /* Section umum */
         section {
-            padding: 3rem 0;
+            padding: 4rem 0;
+            display: none;
+        }
+        
+        section.active {
+            display: block;
+            animation: fadeIn 0.8s ease-out;
         }
         
         .section-title {
             text-align: center;
-            margin-bottom: 2rem;
+            margin-bottom: 3rem;
             color: #2e7d32;
-            font-size: 2rem;
+            font-size: 2.2rem;
+            position: relative;
+            padding-bottom: 1rem;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, #ff9800, #2e7d32);
+            border-radius: 2px;
         }
         
         /* Tentang kami */
@@ -136,7 +207,7 @@
             display: flex;
             flex-wrap: wrap;
             align-items: center;
-            gap: 2rem;
+            gap: 3rem;
         }
         
         .about-text {
@@ -144,21 +215,65 @@
             min-width: 300px;
         }
         
+        .about-text p {
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+        
         .about-image {
             flex: 1;
             min-width: 300px;
             text-align: center;
+            perspective: 1000px;
         }
         
         .about-image img {
             max-width: 100%;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            transform: rotateY(5deg) rotateX(5deg);
+            transition: transform 0.5s ease;
+        }
+        
+        .about-image:hover img {
+            transform: rotateY(0) rotateX(0) scale(1.02);
+        }
+        
+        /* Profil Masjid */
+        .profile-section {
+            background-color: #f9f9f9;
+        }
+        
+        .profile-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .profile-item {
+            margin-bottom: 1.5rem;
+            padding: 1.5rem;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            transition: transform 0.3s;
+        }
+        
+        .profile-item:hover {
+            transform: translateY(-5px);
+        }
+        
+        .profile-label {
+            font-weight: bold;
+            color: #2e7d32;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
         }
         
         /* Layanan */
         .services {
-            background-color: #f9f9f9;
+            background-color: white;
         }
         
         .services-grid {
@@ -168,30 +283,144 @@
         }
         
         .service-card {
-            background-color: white;
-            padding: 2rem;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+            background: linear-gradient(135deg, #f8f9fa 0%, white 100%);
+            padding: 2.5rem 2rem;
+            border-radius: 12px;
+            box-shadow: 0 6px 16px rgba(0,0,0,0.08);
             text-align: center;
-            transition: transform 0.3s;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #ff9800, #2e7d32);
         }
         
         .service-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-8px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.12);
         }
         
         .service-icon {
-            font-size: 3rem;
+            font-size: 3.5rem;
             color: #2e7d32;
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
+            display: inline-block;
+            transform: translateY(0);
+            transition: transform 0.3s;
+        }
+        
+        .service-card:hover .service-icon {
+            transform: translateY(-5px);
         }
         
         .service-card h3 {
             margin-bottom: 1rem;
             color: #2e7d32;
+            font-size: 1.4rem;
         }
         
-        /* Berita dan kegiatan */
+        /* Kegiatan */
+        .activities-section {
+            background-color: #f9f9f9;
+        }
+        
+        .activity-card {
+            background-color: white;
+            border-radius: 12px;
+            padding: 2.5rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .activity-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, #ff9800, #2e7d32);
+        }
+        
+        .activity-title {
+            color: #2e7d32;
+            margin-bottom: 1rem;
+            font-size: 1.6rem;
+        }
+        
+        .activity-date {
+            color: #777;
+            margin-bottom: 1.5rem;
+            font-style: italic;
+            background: #f0f0f0;
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+        }
+        
+        .video-container {
+            margin: 2rem 0;
+            text-align: center;
+            background: #f0f0f0;
+            padding: 1.5rem;
+            border-radius: 10px;
+        }
+        
+        .activity-content p {
+            margin-bottom: 1.2rem;
+            line-height: 1.7;
+        }
+        
+        /* Informasi Jadwal Pengajian */
+        .schedule-section {
+            background-color: white;
+        }
+        
+        .schedule-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 2rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .schedule-table th {
+            background: linear-gradient(135deg, #2e7d32 0%, #1b5e20 100%);
+            color: white;
+            padding: 1.2rem;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        .schedule-table td {
+            padding: 1rem 1.2rem;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .schedule-table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        
+        .schedule-table tr:hover {
+            background-color: #f0f0f0;
+        }
+        
+        /* Berita */
+        .news {
+            background-color: #f9f9f9;
+        }
+        
         .news-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -200,9 +429,15 @@
         
         .news-card {
             background-color: white;
-            border-radius: 8px;
+            border-radius: 12px;
             overflow: hidden;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+            transition: transform 0.3s;
+            cursor: pointer;
+        }
+        
+        .news-card:hover {
+            transform: translateY(-5px);
         }
         
         .news-image {
@@ -231,9 +466,147 @@
             margin-bottom: 0.5rem;
         }
         
+        /* Detail Berita */
+        .news-detail {
+            display: none;
+            background-color: white;
+            border-radius: 12px;
+            padding: 2.5rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+        }
+        
+        .news-detail.active {
+            display: block;
+            animation: fadeIn 0.8s ease-out;
+        }
+        
+        .news-detail-title {
+            color: #2e7d32;
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+        }
+        
+        .news-detail-date {
+            color: #777;
+            margin-bottom: 1.5rem;
+            font-style: italic;
+        }
+        
+        .news-detail-image {
+            margin: 2rem 0;
+            text-align: center;
+        }
+        
+        .news-detail-image img {
+            max-width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        .back-to-news {
+            display: inline-block;
+            margin-top: 2rem;
+            color: #2e7d32;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .back-to-news:hover {
+            text-decoration: underline;
+        }
+        
+        /* Donasi */
+        .donation-section {
+            background-color: white;
+            text-align: center;
+        }
+        
+        .donation-info {
+            background: linear-gradient(135deg, #f8f9fa 0%, white 100%);
+            padding: 2.5rem;
+            border-radius: 12px;
+            max-width: 700px;
+            margin: 0 auto;
+            box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .donation-info::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, #ff9800, #2e7d32);
+        }
+        
+        .bank-info {
+            font-size: 1.3rem;
+            margin: 1.5rem 0;
+            padding: 1.2rem;
+            background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        
+        .copy-btn {
+            background: linear-gradient(135deg, #2e7d32 0%, #1b5e20 100%);
+            color: white;
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+        
+        .copy-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .mobile-banking-options {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .bank-option {
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 1.5rem 1rem;
+            width: 150px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.05);
+        }
+        
+        .bank-option:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+            border-color: #2e7d32;
+        }
+        
+        .bank-logo {
+            font-size: 2.5rem;
+            margin-bottom: 0.8rem;
+        }
+        
         /* Footer */
         footer {
-            background-color: #1b5e20;
+            background: linear-gradient(135deg, #1b5e20 0%, #2e7d32 100%);
             color: white;
             padding: 3rem 0 1rem;
         }
@@ -246,8 +619,20 @@
         }
         
         .footer-section h3 {
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
             font-size: 1.3rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+        
+        .footer-section h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background: #ff9800;
         }
         
         .footer-section ul {
@@ -255,108 +640,129 @@
         }
         
         .footer-section ul li {
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.8rem;
         }
         
         .footer-section ul li a {
             color: #ddd;
             text-decoration: none;
             transition: color 0.3s;
+            display: inline-block;
         }
         
         .footer-section ul li a:hover {
             color: white;
+            transform: translateX(5px);
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .social-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        
+        .social-link:hover {
+            background: #ff9800;
+            transform: translateY(-3px);
         }
         
         .copyright {
             text-align: center;
-            padding-top: 1rem;
+            padding-top: 1.5rem;
             border-top: 1px solid rgba(255,255,255,0.1);
             font-size: 0.9rem;
             color: #ccc;
         }
         
-        /* Profil Masjid */
-        .profile-section {
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            animation: fadeIn 0.3s ease-out;
+        }
+        
+        .modal-content {
             background-color: white;
-            padding: 3rem 0;
+            padding: 2.5rem;
+            border-radius: 12px;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            animation: zoomIn 0.3s ease-out;
         }
         
-        .profile-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-        
-        .profile-item {
-            margin-bottom: 1.5rem;
-        }
-        
-        .profile-label {
-            font-weight: bold;
-            color: #2e7d32;
-            margin-bottom: 0.5rem;
-        }
-        
-        /* Kegiatan Section */
-        .activities-section {
-            background-color: #f9f9f9;
-            padding: 3rem 0;
-        }
-        
-        .activity-card {
-            background-color: white;
-            border-radius: 8px;
-            padding: 2rem;
-            margin-bottom: 2rem;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
-        }
-        
-        .activity-title {
+        .modal h3 {
             color: #2e7d32;
             margin-bottom: 1rem;
             font-size: 1.5rem;
         }
         
-        .activity-date {
-            color: #777;
-            margin-bottom: 1rem;
-            font-style: italic;
+        .modal-close {
+            background: linear-gradient(135deg, #ff9800 0%, #f57c00 100%);
+            color: white;
+            border: none;
+            padding: 0.7rem 1.5rem;
+            border-radius: 30px;
+            cursor: pointer;
+            margin-top: 1.5rem;
+            font-weight: 600;
+            transition: all 0.3s;
         }
         
-        .video-container {
-            margin: 2rem 0;
-            text-align: center;
-        }
-        
-        .video-container video {
-            max-width: 100%;
-            border-radius: 8px;
+        .modal-close:hover {
+            transform: translateY(-2px);
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
         }
         
-        /* Donasi Section */
-        .donation-section {
-            background-color: white;
-            padding: 3rem 0;
-            text-align: center;
+        /* Animasi */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
         
-        .donation-info {
-            background-color: #f9f9f9;
-            padding: 2rem;
-            border-radius: 8px;
-            max-width: 600px;
-            margin: 0 auto;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+        @keyframes fadeInUp {
+            from { 
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
         
-        .bank-info {
-            font-size: 1.2rem;
-            margin: 1.5rem 0;
-            padding: 1rem;
-            background-color: #e8f5e9;
-            border-radius: 5px;
+        @keyframes zoomIn {
+            from { 
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to { 
+                opacity: 1;
+                transform: scale(1);
+            }
         }
         
         /* Responsif */
@@ -377,11 +783,29 @@
             }
             
             .hero h2 {
-                font-size: 2rem;
+                font-size: 2.2rem;
             }
             
             .hero p {
                 font-size: 1rem;
+            }
+            
+            .mobile-banking-options {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .bank-option {
+                width: 100%;
+                max-width: 200px;
+            }
+            
+            .about-content, .footer-content {
+                flex-direction: column;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
             }
         }
     </style>
@@ -392,16 +816,17 @@
         <div class="container">
             <div class="header-content">
                 <div class="logo">
-                    <img src="logo-masjid.jpg" alt="Logo Masjid Al-Istiqomah">
+                    <img src="assets/images/logo-masjid.jpg" alt="Logo Masjid Al-Istiqomah">
                     <h1>Masjid Al-Istiqomah</h1>
                 </div>
                 <nav>
                     <ul>
-                        <li><a href="#beranda">Beranda</a></li>
-                        <li><a href="#profil">Profil</a></li>
-                        <li><a href="#berita">Berita</a></li>
-                        <li><a href="#kegiatan">Kegiatan</a></li>
-                        <li><a href="#informasi">Informasi</a></li>
+                        <li><a href="#beranda" class="nav-link active" data-target="beranda">Beranda</a></li>
+                        <li><a href="#profil" class="nav-link" data-target="profil">Profil</a></li>
+                        <li><a href="#kegiatan" class="nav-link" data-target="kegiatan">Kegiatan</a></li>
+                        <li><a href="#berita" class="nav-link" data-target="berita">Berita</a></li>
+                        <li><a href="#informasi" class="nav-link" data-target="informasi">Informasi</a></li>
+                        <li><a href="#donasi" class="nav-link" data-target="donasi">Donasi</a></li>
                     </ul>
                 </nav>
             </div>
@@ -409,11 +834,13 @@
     </header>
 
     <!-- Hero Section -->
-    <section id="beranda" class="hero">
+    <section id="beranda" class="hero active">
         <div class="container">
-            <h2>Selamat Datang di Website Resmi Masjid Al-Istiqomah</h2>
-            <p>Sebagai pusat kegiatan keislaman, kami berkomitmen untuk menyediakan layanan terbaik bagi jamaah dan masyarakat sekitar. Mari bersama-sama membangun peradaban Islam yang lebih baik.</p>
-            <a href="#donasi" class="btn">Sumbangan / Infaq</a>
+            <div class="hero-content">
+                <h2>Selamat Datang di Website Resmi Masjid Al-Istiqomah</h2>
+                <p>Sebagai pusat kegiatan keislaman, kami berkomitmen untuk menyediakan layanan terbaik bagi jamaah dan masyarakat sekitar. Mari bersama-sama membangun peradaban Islam yang lebih baik.</p>
+                <a href="#donasi" class="btn">Sumbangan / Infaq</a>
+            </div>
         </div>
     </section>
 
@@ -423,12 +850,13 @@
             <h2 class="section-title">Tentang Masjid Al-Istiqomah</h2>
             <div class="about-content">
                 <div class="about-text">
-                    <p>Masjid Al-Istiqomah adalah tempat ibadah umat Islam yang berlokasi di jantung kota. Didirikan pada tahun 1985, masjid ini telah menjadi pusat kegiatan keagamaan, pendidikan, dan sosial bagi masyarakat sekitar.</p>
-                    <p>Kami memiliki berbagai program unggulan seperti pengajian rutin, pendidikan anak, bantuan sosial, dan kegiatan kemasyarakatan lainnya. Dengan semangat untuk selalu istiqomah dalam kebaikan, kami berharap dapat terus memberikan manfaat bagi umat.</p>
-                    <p>Pengurus masjid terdiri dari para ulama, akademisi, dan profesional yang berkomitmen untuk mengembangkan masjid sebagai pusat peradaban Islam modern.</p>
+                    <p>Masjid Jami Al-Istiqomah terletak di Perumahan Ciomas River View, RT 001 RW 016, Desa Ciomas Rahayu, Kecamatan Ciomas, Bogor, Jawa Barat. Masjid ini diresmikan pada tanggal 2 Februari 2019 / 27 Jumadil Awal 1440H oleh Drs. Sutisna, Kepala Kecamatan Ciomas. Masjid ini berdiri di atas tanah wakaf dengan luas tanah 17 meter x 20 meter dan luas bangunan 16 meter x 16 meter. Masjid ini mampu menampung sekitar 320 jamaah.</p>
+                    <p>Fasilitas yang tersedia di Masjid Al-Istiqomah cukup lengkap, antara lain ruang ibadah, kamar tamir, tempat parkir kendaraan, perlengkapan pengurusan jenazah, pendingin ruangan (AC), sound system, tempat wudhu untuk ikhwan dan akhwat, toilet, serta dapur umum. Berbagai kegiatan keagamaan rutin dilaksanakan, seperti shalat fardu berjama'ah, shalat Jumat, majelis ta'lim, Taman Pendidikan Al-Quran (TPA), dan peringatan hari besar Islam (PHBI).</p>
+                    <p>Masjid ini dikelola oleh 21 orang pengurus yang berkomitmen untuk menjaga dan mengembangkan berbagai aktivitas keagamaan serta memberikan pelayanan terbaik kepada jamaah.</p>
+
                 </div>
                 <div class="about-image">
-                    <img src="masjid-exterior.jpg" alt="Eksterior Masjid Al-Istiqomah">
+                    <img src="assets/images/masjid-exterior.jpg" alt="Eksterior Masjid Al-Istiqomah">
                 </div>
             </div>
         </div>
@@ -522,10 +950,13 @@
             
             <div class="activity-card">
                 <h3 class="activity-title">Acara Maulid Nabi Muhammad SAW 1447 H</h3>
-                <div class="activity-date">Ahad, 28 September 2025</div>
+                <div class="activity-date">Ahad, 28 Februari 2025</div>
                 <div class="video-container">
-                    <!-- Tempat untuk video -->
-                    <p>[Video akan ditampilkan di sini]</p>
+                    <!-- Video dengan autoplay dan suara -->
+                    <video width="100%" controls autoplay muted>
+                        <source src="assets/videos/maulid-nabi-1447h.mp4" type="video/mp4">
+                        Browser Anda tidak mendukung pemutaran video.
+                    </video>
                 </div>
                 <div class="activity-content">
                     <p>Bismillahir Rahmanir Rahim</p>
@@ -546,8 +977,11 @@
                 <h3 class="activity-title">Laporan Kegiatan Maulid Nabi Muhammad SAW 1447 H</h3>
                 <div class="activity-date">29 September 2025</div>
                 <div class="video-container">
-                    <!-- Tempat untuk video -->
-                    <p>[Video akan ditampilkan di sini]</p>
+                    <!-- Video dengan autoplay dan suara -->
+                    <video width="100%" controls autoplay muted>
+                        <source src="assets/videos/laporan-maulid-1447h.mp4" type="video/mp4">
+                        Browser Anda tidak mendukung pemutaran video.
+                    </video>
                 </div>
                 <div class="activity-content">
                     <p>Assalamu'alaikum warahmatullahi wabarakatuh</p>
@@ -565,41 +999,160 @@
         </div>
     </section>
 
+    <!-- Informasi Jadwal Pengajian -->
+    <section id="informasi" class="schedule-section">
+        <div class="container">
+            <h2 class="section-title">Jadwal Pengajian Rutin</h2>
+            <div class="schedule-info">
+                <p>Berikut adalah jadwal pengajian rutin yang diselenggarakan oleh Masjid Al-Istiqomah:</p>
+                
+                <table class="schedule-table">
+                    <thead>
+                        <tr>
+                            <th>Hari</th>
+                            <th>Waktu</th>
+                            <th>Kegiatan</th>
+                            <th>Pemateri</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Senin</td>
+                            <td>19.00 - 20.30</td>
+                            <td>Kajian Aqidah</td>
+                            <td>Ust. Ahmad Fauzi</td>
+                        </tr>
+                        <tr>
+                            <td>Selasa</td>
+                            <td>19.00 - 20.30</td>
+                            <td>Kajian Fiqih</td>
+                            <td>Ust. Muhammad Ali</td>
+                        </tr>
+                        <tr>
+                            <td>Rabu</td>
+                            <td>19.00 - 20.30</td>
+                            <td>Kajian Tafsir Al-Qur'an</td>
+                            <td>Ust. Abdullah Rahman</td>
+                        </tr>
+                        <tr>
+                            <td>Kamis</td>
+                            <td>19.00 - 20.30</td>
+                            <td>Kajian Sirah Nabawiyah</td>
+                            <td>Ust. Hasan Basri</td>
+                        </tr>
+                        <tr>
+                            <td>Jumat</td>
+                            <td>16.30 - 18.00</td>
+                            <td>Pengajian Remaja</td>
+                            <td>Ust. Farid Maulana</td>
+                        </tr>
+                        <tr>
+                            <td>Sabtu</td>
+                            <td>08.00 - 10.00</td>
+                            <td>TPA/TPQ</td>
+                            <td>Tim Guru TPA</td>
+                        </tr>
+                        <tr>
+                            <td>Ahad</td>
+                            <td>07.30 - 11.00</td>
+                            <td>Pengajian Umum</td>
+                            <td>Ust. Azis</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
     <!-- Berita -->
     <section id="berita" class="news">
         <div class="container">
             <h2 class="section-title">Berita Terkini</h2>
+            
             <div class="news-grid">
-                <div class="news-card">
+                <div class="news-card" data-news="pengajian-rutin">
                     <div class="news-image">
-                        <img src="kegiatan1.jpg" alt="Kegiatan Masjid">
+                        <img src="assets/images/pengajian-rutin.jpg" alt="Pengajian Rutin">
                     </div>
                     <div class="news-content">
-                        <div class="news-date">15 Oktober 2023</div>
-                        <h3>Pengajian Rutin Bulanan Masjid Al-Istiqomah</h3>
-                        <p>Masjid Al-Istiqomah akan mengadakan pengajian rutin bulanan dengan tema "Menjaga Istiqomah di Era Modern".</p>
+                        <div class="news-date">28 februari 2025</div>
+                        <h3>Masjid Al-Istiqomah </h3>
+                        <p>Mengucapkan Selamat Menunaikan Ibadah Puasa 1446 H"</p>
                     </div>
                 </div>
-                <div class="news-card">
+                
+                <div class="news-card" data-news="pembagian-sembako">
                     <div class="news-image">
-                        <img src="kegiatan2.jpg" alt="Kegiatan Masjid">
+                        <img src="assets/images/pembagian-sembako.jpg" alt="Maulid Nabi Muhammad">
                     </div>
                     <div class="news-content">
-                        <div class="news-date">10 Oktober 2023</div>
-                        <h3>Pembagian Sembako untuk Warga Kurang Mampu</h3>
-                        <p>Dalam rangka memperingati Maulid Nabi, masjid akan membagikan sembako kepada 100 keluarga kurang mampu.</p>
+                        <div class="news-date">16 September 2024</div>
+                        <h3>Semesta Berseri Menyambut Maulid Nabi Muhammad Shalallahu 'Alaihi Wasallam</h3>
+                        <p>Hikmah Maulid Nabi Muhammad SAW</p>
                     </div>
                 </div>
-                <div class="news-card">
+                
+                <div class="news-card" data-news="renovasi-masjid">
                     <div class="news-image">
-                        <img src="kegiatan3.jpg" alt="Kegiatan Masjid">
+                        <img src="assets/images/renovasi-masjid.jpg" alt="Renovasi Masjid">
                     </div>
                     <div class="news-content">
-                        <div class="news-date">5 Oktober 2023</div>
-                        <h3>Pendaftaran TPQ Masjid Al-Istiqomah Tahun Ajaran Baru</h3>
-                        <p>Dibuka pendaftaran siswa baru TPQ Masjid Al-Istiqomah untuk tahun ajaran 2023/2024.</p>
+                        <div class="news-date">20 Juli 2024</div>
+                        <h3>Perlombaan Gema Muharram Masjid Al-Istiqomah</h3>
+                        <p> bulan Muharram membawa kedamaian, berkah, dan kebahagiaan ke dalam hidup kita semua.</p>
                     </div>
                 </div>
+            </div>
+            
+            <!-- Detail Berita -->
+            <div id="pengajian-rutin" class="news-detail">
+                <h2 class="news-detail-title">Dewan Kemakmuran Masjid Al-Istiqomah Mengucapkan Selamat Menunaikan Ibadah Puasa 1446 H</h2>
+                <div class="news-detail-date">28 februari 2025</div>
+                <div class="news-detail-image">
+                    <img src="assets/images/pengajian-rutin.jpg" alt="Pengajian Rutin">
+                </div>
+                <div class="news-detail-content">
+                   <p>Alhamdulillah, dengan penuh rasa syukur, Dewan Kemakmuran Masjid Al-Istiqomah mengucapkan Selamat Menunaikan Ibadah Puasa 1446 H yang jatuh pada tanggal 28 Februari 2025. Semoga Allah Subhanahu wa Ta'ala memberikan kemudahan, kekuatan, dan keberkahan bagi kita semua dalam menjalani ibadah puasa di bulan yang penuh ampunan ini.</p>
+                   <p>Ramadhan adalah bulan yang sangat istimewa, di mana setiap amal baik yang kita lakukan akan dilipatgandakan pahalanya. Ini adalah kesempatan bagi kita untuk membersihkan jiwa, memperbaiki diri, dan meningkatkan kualitas ibadah. Selain menahan diri dari makan dan minum, puasa juga mengajarkan kita untuk menahan hawa nafsu, menjaga lisan, dan memperbanyak amal shalih dalam kehidupan sehari-hari.</p>
+                   <p>Selama bulan Ramadhan ini, kami mengajak seluruh jamaah Masjid Al-Istiqomah untuk mempererat tali silaturahmi dan memperbanyak kegiatan ibadah, seperti shalat berjama'ah, tadarus Al-Qur'an, majelis ta'lim, serta kegiatan sosial lainnya. Semoga setiap langkah kita di bulan yang penuh berkah ini dapat membawa kita lebih dekat kepada Allah Subhanahu wa Ta'ala dan memperoleh ampunan serta rahmat-Nya yang luas.</p>
+                   <p>Selain itu, mari kita manfaatkan waktu di bulan Ramadhan untuk meningkatkan kepedulian sosial dan berbagi dengan sesama. Semoga segala amal yang kita lakukan, baik ibadah mahdah maupun sosial, diterima dan dilipatgandakan pahalanya oleh Allah. Kami juga berharap, semoga kita semua dapat meraih kemenangan di hari raya Idul Fitri dengan hati yang bersih dan penuh kebahagiaan.</p>
+                   <p>Selamat menjalankan ibadah puasa 1446 H! Semoga Allah memberikan kita kekuatan dan keberkahan dalam setiap langkah ibadah kita di bulan suci ini. Aamiin.</p>
+                   <p>Wassalamu'alaikum Warahmatullahi Wabarakatuh.</p>
+                </div>
+                <a href="#" class="back-to-news">← Kembali ke Berita</a>
+            </div>
+            
+            <div id="pembagian-sembako" class="news-detail">
+                <h2 class="news-detail-title">Pembagian Sembako untuk Warga Kurang Mampu</h2>
+                <div class="news-detail-date">16 September 2024</div>
+                <div class="news-detail-image">
+                    <img src="assets/images/pembagian-sembako.jpg" alt="Pembagian Sembako">
+                </div>
+                <div class="news-detail-content">
+                    <h2>Semesta Berseri Menyambut Maulid Nabi Muhammad Shalallahu 'Alaihi Wasallam</h2>
+
+<p>Semesta ini berseri, penuh suka cita dan bahagia menyambut Maulid Nabi Muhammad Shalallahu 'Alaihi Wasallam pada tanggal 16 September 2024. Sebuah momen penuh berkah yang mengingatkan kita semua akan sifat mulia dan teladan luar biasa yang diberikan oleh Rasulullah SAW. Pada hari yang penuh kemuliaan ini, umat Islam di seluruh dunia merayakan kelahiran junjungan kita, Nabi Muhammad, dengan penuh rasa syukur dan kecintaan yang mendalam.</p>
+<p>Perayaan Maulid Nabi bukan hanya sekadar merayakan hari kelahiran beliau, tetapi juga merupakan momentum untuk merenungkan dan mengamalkan sunnah-sunnah Nabi dalam kehidupan sehari-hari. Rasulullah SAW adalah teladan terbaik dalam segala aspek kehidupan, dari akhlak, kepemimpinan, hingga cara berinteraksi dengan sesama. Mari kita manfaatkan kesempatan ini untuk memperbaharui niat, memperbaiki diri, dan lebih mendekatkan diri kepada Allah Subhanahu wa Ta'ala melalui shalawat dan amalan baik.</p>
+<p>Semoga dengan memperingati Maulid Nabi, kita semakin cinta kepada Rasulullah SAW, dan setiap langkah hidup kita senantiasa diilhami oleh ajaran dan akhlak beliau. Semoga Allah Subhanahu wa Ta'ala selalu memberikan kita taufik dan hidayah-Nya untuk mengikuti jejak Nabi Muhammad SAW dalam segala hal. Aamiin.</p>
+
+                </div>
+                <a href="#" class="back-to-news">← Kembali ke Berita</a>
+            </div>
+            
+            <div id="renovasi-masjid" class="news-detail">
+                <h2 class="news-detail-title">Perlombaan Gema Muharram Masjid Al-Istiqomah</h2>
+                <div class="news-detail-date">20 Juli 2024</div>
+                <div class="news-detail-image">
+                    <img src="assets/images/renovasi-masjid.jpg" alt="Renovasi Masjid">
+                </div>
+                <div class="news-detail-content">
+                        <h2>Perlombaan Gema Muharram Masjid Al-Istiqomah</h2>
+<p>Semoga cahaya bulan Muharram membawa kedamaian, berkah, dan kebahagiaan ke dalam hidup kita semua. Masjid Al-Istiqomah dengan penuh rasa syukur dan suka cita mengundang seluruh jamaah untuk turut serta dalam **Perlombaan Gema Muharram**. Acara ini diselenggarakan sebagai bentuk perayaan Tahun Baru Islam 1446 H, yang sekaligus menjadi momentum untuk mempererat ukhuwah Islamiyah dan meningkatkan semangat dalam beribadah.</p>
+<p>Perlombaan ini diharapkan tidak hanya menjadi ajang untuk meraih prestasi, tetapi juga sebagai wadah untuk saling memperkuat tali silaturahmi antar warga, serta menumbuhkan semangat kebersamaan dalam merayakan tahun baru Islam. Dalam setiap langkah, semoga kita dapat menjadikan bulan Muharram sebagai titik awal untuk memperbaiki diri dan melangkah lebih dekat kepada Allah Subhanahu wa Ta'ala. Kami mengajak seluruh jamaah untuk berpartisipasi dan memeriahkan acara ini dengan penuh semangat, serta menjadikan setiap momen di bulan yang penuh berkah ini sebagai ladang amal.</p>
+<p>Selamat merayakan Tahun Baru Islam 1446 H! Semoga setiap doa dan harapan kita dikabulkan, dan segala amal ibadah yang kita lakukan di bulan Muharram ini mendatangkan keberkahan yang berlimpah. Aamiin.</p>
+
+                </div>
+                <a href="#" class="back-to-news">← Kembali ke Berita</a>
             </div>
         </div>
     </section>
@@ -607,15 +1160,39 @@
     <!-- Donasi -->
     <section id="donasi" class="donation-section">
         <div class="container">
-            <h2 class="section-title">Sumbangan / Infaq</h2>
+            <h2 class="section-title">Salurkan Donasi Anda</h2>
             <div class="donation-info">
-                <p>Bagi yang ingin berpartisipasi dalam kegiatan Masjid Al-Istiqomah, Anda dapat memberikan sumbangan/infaq melalui:</p>
+                <p>Bantu kami mengembangkan Masjid Al-Istiqomah dan berbagai programnya dengan menyalurkan donasi melalui:</p>
+                
                 <div class="bank-info">
-                    <strong>No. Rek. Masjid Al-Istiqomah BSI: 7970990997</strong>
+                    <span>Bank Syariah Indonesia (BSI)</span>
+                    <span>No. Rekening: 7970990997</span>
+                    <button class="copy-btn" onclick="copyToClipboard('7970990997')">Salin No. Rekening</button>
                 </div>
-                <p>Klik tombol di bawah untuk langsung menuju aplikasi mobile banking:</p>
-                <a href="#" class="btn" onclick="alert('Fitur ini akan mengarahkan ke aplikasi mobile banking BSI')">Donasi Sekarang</a>
-                <p style="margin-top: 1rem;">Semoga Allah membalas kebaikan Bapak/Ibu dengan pahala yang berlipat ganda. Aamiin.</p>
+                
+                <p>Atau melalui mobile banking:</p>
+                
+                <div class="mobile-banking-options">
+                    <div class="bank-option" onclick="showModal('BSI Mobile')">
+                        <div class="bank-logo">🏦</div>
+                        <div>BSI Mobile</div>
+                    </div>
+                    <div class="bank-option" onclick="showModal('BNI Mobile')">
+                        <div class="bank-logo">🏦</div>
+                        <div>BNI Mobile</div>
+                    </div>
+                    <div class="bank-option" onclick="showModal('BCA Mobile')">
+                        <div class="bank-logo">🏦</div>
+                        <div>BCA Mobile</div>
+                    </div>
+                    <div class="bank-option" onclick="showModal('Mandiri Online')">
+                        <div class="bank-logo">🏦</div>
+                        <div>Mandiri Online</div>
+                    </div>
+                </div>
+                
+                <p>Konfirmasi donasi dapat dilakukan dengan menghubungi:</p>
+                <p>Ustadz Azis: 085775137180</p>
             </div>
         </div>
     </section>
@@ -626,60 +1203,145 @@
             <div class="footer-content">
                 <div class="footer-section">
                     <h3>Kontak Kami</h3>
-                    <p>Ciomas River View-RT 001 RW016 Desa Ciomas Rahayu Kecamatan Ciomas, Bogor, Jawa Barat</p>
-                    <p>Telepon: (+62) 857-7513-7180</p>
-                    <p>Email: info@masjidalistiqomah.id</p>
-                </div>
-                <div class="footer-section">
-                    <h3>Layanan</h3>
                     <ul>
-                        <li><a href="#">Jadwal Sholat</a></li>
-                        <li><a href="#">Kajian Online</a></li>
-                        <li><a href="#donasi">Donasi Online</a></li>
-                        <li><a href="#">Perpustakaan Digital</a></li>
+                        <li>Alamat: Perumahan Ciomas River View - RT 001 RW 016. Desa Ciomas Rahayu, Kecamatan Ciomas, Bogor, Jawa Barat</li>
+                        <li>Email: masjidciomasriverview@gmail.com</li>
+                        <li>Telepon: (0857) 7513 7180</li>
                     </ul>
                 </div>
                 <div class="footer-section">
-                    <h3>Bantuan</h3>
+                    <h3>Menu Cepat</h3>
                     <ul>
-                        <li><a href="#">FAQ</a></li>
-                        <li><a href="#">Kebijakan Privasi</a></li>
-                        <li><a href="#">Syarat dan Ketentuan</a></li>
-                        <li><a href="#">Hubungi Kami</a></li>
+                        <li><a href="#beranda" class="nav-link" data-target="beranda">Beranda</a></li>
+                        <li><a href="#profil" class="nav-link" data-target="profil">Profil</a></li>
+                        <li><a href="#kegiatan" class="nav-link" data-target="kegiatan">Kegiatan</a></li>
+                        <li><a href="#berita" class="nav-link" data-target="berita">Berita</a></li>
+                        <li><a href="#informasi" class="nav-link" data-target="informasi">Informasi</a></li>
+                        <li><a href="#donasi" class="nav-link" data-target="donasi">Donasi</a></li>
                     </ul>
                 </div>
                 <div class="footer-section">
-                    <h3>Tautan Cepat</h3>
-                    <ul>
-                        <li><a href="#beranda">Beranda</a></li>
-                        <li><a href="#profil">Profil</a></li>
-                        <li><a href="#berita">Berita</a></li>
-                        <li><a href="#kegiatan">Kegiatan</a></li>
-                    </ul>
+                    <h3>Ikuti Kami</h3>
+                    <p>Dapatkan update terbaru tentang kegiatan masjid melalui media sosial kami:</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link">📷</a>
+                        <a href="#" class="social-link">📹</a>
+                        <a href="#" class="social-link">📘</a>
+                    </div>
                 </div>
             </div>
             <div class="copyright">
-                <p>&copy; 2025 Masjid Al-Istiqomah. All rights reserved.</p>
+                <p>&copy; 2025 Masjid Al-Istiqomah. Semua Hak Dilindungi.</p>
             </div>
         </div>
     </footer>
 
+    <!-- Modal -->
+    <div id="bankModal" class="modal">
+        <div class="modal-content">
+            <h3>Donasi Melalui Mobile Banking</h3>
+            <p>Untuk donasi melalui <span id="modalBankName"></span>, silakan ikuti langkah berikut:</p>
+            <ol style="text-align: left; margin: 1rem 0;">
+                <li>Buka aplikasi <span id="modalBankName2"></span></li>
+                <li>Pilih menu transfer</li>
+                <li>Masukkan nomor rekening: <strong>7970990997</strong></li>
+                <li>Pilih Bank Syariah Indonesia (BSI)</li>
+                <li>Masukkan nominal donasi</li>
+                <li>Konfirmasi transaksi</li>
+            </ol>
+            <button class="modal-close" onclick="closeModal()">Tutup</button>
+        </div>
+    </div>
+
     <script>
-        // Smooth scrolling untuk navigasi
-        document.querySelectorAll('nav a').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
+        // Navigasi antar section
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', function(e) {
                 e.preventDefault();
                 
-                const targetId = this.getAttribute('href');
-                const targetElement = document.querySelector(targetId);
-                
-                window.scrollTo({
-                    top: targetElement.offsetTop - 80,
-                    behavior: 'smooth'
+                // Hapus kelas active dari semua link dan section
+                document.querySelectorAll('.nav-link').forEach(item => {
+                    item.classList.remove('active');
                 });
+                document.querySelectorAll('section').forEach(section => {
+                    section.classList.remove('active');
+                });
+                
+                // Tambah kelas active ke link yang diklik
+                this.classList.add('active');
+                
+                // Tampilkan section yang sesuai
+                const target = this.getAttribute('data-target');
+                document.getElementById(target).classList.add('active');
+                
+                // Scroll ke section yang dipilih
+                document.getElementById(target).scrollIntoView({ behavior: 'smooth' });
             });
+        });
+        
+        // Navigasi berita
+        document.querySelectorAll('.news-card').forEach(card => {
+            card.addEventListener('click', function() {
+                const newsId = this.getAttribute('data-news');
+                
+                // Sembunyikan semua detail berita
+                document.querySelectorAll('.news-detail').forEach(detail => {
+                    detail.classList.remove('active');
+                });
+                
+                // Sembunyikan grid berita
+                document.querySelector('.news-grid').style.display = 'none';
+                
+                // Tampilkan detail berita yang dipilih
+                document.getElementById(newsId).classList.add('active');
+            });
+        });
+        
+        // Kembali ke berita
+        document.querySelectorAll('.back-to-news').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Sembunyikan semua detail berita
+                document.querySelectorAll('.news-detail').forEach(detail => {
+                    detail.classList.remove('active');
+                });
+                
+                // Tampilkan grid berita
+                document.querySelector('.news-grid').style.display = 'grid';
+            });
+        });
+        
+        // Salin nomor rekening
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                alert('Nomor rekening berhasil disalin: ' + text);
+            });
+        }
+        
+        // Modal mobile banking
+        function showModal(bankName) {
+            document.getElementById('modalBankName').textContent = bankName;
+            document.getElementById('modalBankName2').textContent = bankName;
+            document.getElementById('bankModal').style.display = 'flex';
+        }
+        
+        function closeModal() {
+            document.getElementById('bankModal').style.display = 'none';
+        }
+        
+        // Tutup modal saat klik di luar
+        window.addEventListener('click', function(e) {
+            if (e.target === document.getElementById('bankModal')) {
+                closeModal();
+            }
+        });
+        
+        // Inisialisasi halaman
+        document.addEventListener('DOMContentLoaded', function() {
+            // Tampilkan section beranda secara default
+            document.getElementById('beranda').classList.add('active');
         });
     </script>
 </body>
 </html>
-
