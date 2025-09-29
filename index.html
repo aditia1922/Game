@@ -276,6 +276,89 @@
             color: #ccc;
         }
         
+        /* Profil Masjid */
+        .profile-section {
+            background-color: white;
+            padding: 3rem 0;
+        }
+        
+        .profile-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .profile-item {
+            margin-bottom: 1.5rem;
+        }
+        
+        .profile-label {
+            font-weight: bold;
+            color: #2e7d32;
+            margin-bottom: 0.5rem;
+        }
+        
+        /* Kegiatan Section */
+        .activities-section {
+            background-color: #f9f9f9;
+            padding: 3rem 0;
+        }
+        
+        .activity-card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+        }
+        
+        .activity-title {
+            color: #2e7d32;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+        
+        .activity-date {
+            color: #777;
+            margin-bottom: 1rem;
+            font-style: italic;
+        }
+        
+        .video-container {
+            margin: 2rem 0;
+            text-align: center;
+        }
+        
+        .video-container video {
+            max-width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        /* Donasi Section */
+        .donation-section {
+            background-color: white;
+            padding: 3rem 0;
+            text-align: center;
+        }
+        
+        .donation-info {
+            background-color: #f9f9f9;
+            padding: 2rem;
+            border-radius: 8px;
+            max-width: 600px;
+            margin: 0 auto;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+        }
+        
+        .bank-info {
+            font-size: 1.2rem;
+            margin: 1.5rem 0;
+            padding: 1rem;
+            background-color: #e8f5e9;
+            border-radius: 5px;
+        }
+        
         /* Responsif */
         @media (max-width: 768px) {
             .header-content {
@@ -318,7 +401,6 @@
                         <li><a href="#profil">Profil</a></li>
                         <li><a href="#berita">Berita</a></li>
                         <li><a href="#kegiatan">Kegiatan</a></li>
-                        <li><a href="#perpustakaan">Perpustakaan</a></li>
                         <li><a href="#informasi">Informasi</a></li>
                     </ul>
                 </nav>
@@ -331,7 +413,7 @@
         <div class="container">
             <h2>Selamat Datang di Website Resmi Masjid Al-Istiqomah</h2>
             <p>Sebagai pusat kegiatan keislaman, kami berkomitmen untuk menyediakan layanan terbaik bagi jamaah dan masyarakat sekitar. Mari bersama-sama membangun peradaban Islam yang lebih baik.</p>
-            <a href="#profil" class="btn">Pelajari Lebih Lanjut</a>
+            <a href="#donasi" class="btn">Sumbangan / Infaq</a>
         </div>
     </section>
 
@@ -347,6 +429,63 @@
                 </div>
                 <div class="about-image">
                     <img src="masjid-exterior.jpg" alt="Eksterior Masjid Al-Istiqomah">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Profil Masjid -->
+    <section class="profile-section">
+        <div class="container">
+            <h2 class="section-title">PROFILE MASJID AL-ISTIQOMAH</h2>
+            <div class="profile-grid">
+                <div>
+                    <div class="profile-item">
+                        <div class="profile-label">Nama Masjid</div>
+                        <div>Masjid Jami Al-Istiqomah</div>
+                    </div>
+                    <div class="profile-item">
+                        <div class="profile-label">Alamat</div>
+                        <div>Perumahan Ciomas River View - RT 001 RW 016. Desa Ciomas Rahayu, Kecamatan Ciomas, Bogor, Jawa Barat</div>
+                    </div>
+                    <div class="profile-item">
+                        <div class="profile-label">Tanggal Peresmian</div>
+                        <div>02 Februari 2019/27 Jumadil Awal 1440H</div>
+                    </div>
+                    <div class="profile-item">
+                        <div class="profile-label">Diresmikan Oleh</div>
+                        <div>Drs. Sutisna/Kepala Kecamatan Ciomas</div>
+                    </div>
+                    <div class="profile-item">
+                        <div class="profile-label">Luas Tanah</div>
+                        <div>17 M x 20 M</div>
+                    </div>
+                </div>
+                <div>
+                    <div class="profile-item">
+                        <div class="profile-label">Luas Bangunan</div>
+                        <div>16 M x 16 M</div>
+                    </div>
+                    <div class="profile-item">
+                        <div class="profile-label">Status Tanah</div>
+                        <div>Tanah Wakaf</div>
+                    </div>
+                    <div class="profile-item">
+                        <div class="profile-label">Kapasitas Masjid</div>
+                        <div>320 Jamaah</div>
+                    </div>
+                    <div class="profile-item">
+                        <div class="profile-label">Fasilitas Masjid</div>
+                        <div>Ruang Ibadah, Kamar Tamir, Parkir Kendaraan, Perlengkapan Pengurusan Jenazah, Pendingin AC, Sound System, Tempat Wudhu Ikhwan & Akhwat, Toilet Ikhwan & Akhwat dan Dapur Umum</div>
+                    </div>
+                    <div class="profile-item">
+                        <div class="profile-label">Aktifitas Masjid</div>
+                        <div>Shalat Fardu Berjama'ah, Shalat Jum'at, Majelis Ta'lim, Taman Pendidikan Al-Quran (TPA) dan PHBI</div>
+                    </div>
+                    <div class="profile-item">
+                        <div class="profile-label">Jumlah Pengurus</div>
+                        <div>21 Orang</div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -371,6 +510,56 @@
                     <div class="service-icon">🤝</div>
                     <h3>Sosial</h3>
                     <p>Kegiatan bakti sosial, santunan anak yatim, bantuan untuk masyarakat kurang mampu, dan program sosial lainnya.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Kegiatan -->
+    <section id="kegiatan" class="activities-section">
+        <div class="container">
+            <h2 class="section-title">Kegiatan Terkini</h2>
+            
+            <div class="activity-card">
+                <h3 class="activity-title">Acara Maulid Nabi Muhammad SAW 1447 H</h3>
+                <div class="activity-date">Ahad, 28 September 2025</div>
+                <div class="video-container">
+                    <!-- Tempat untuk video -->
+                    <p>[Video akan ditampilkan di sini]</p>
+                </div>
+                <div class="activity-content">
+                    <p>Bismillahir Rahmanir Rahim</p>
+                    <p>Assalamualaikum wa rahmatullahi wa barakatuh,</p>
+                    <p>Mewakili Panitia Maulid Nabi Muhammad SAW 1447 H, kami mengajak para warga dan jamaah Masjid Al Istiqomah Perumahan Ciomas River View RT 01/RW 16 untuk ikut berpartisipasi dalam kegiatan perayaan Maulid Nabi Muhammad SAW 1447 H Pada hari/Tanggal: Ahad/28 September 2025</p>
+                    <p>Pukul : 07.30 - 11.00</p>
+                    <p>Bagi warga yang ingin berpartisipasi silakan menghubungi Panitia.</p>
+                    <p>No. Rek. Masjid Al Istiqomah BSI: 7970990997</p>
+                    <p>Saldo Sementara Rp.5.050.000</p>
+                    <p>Ustadz Azis: 085775137180</p>
+                    <p>Bu Wida RT 01: 08125328822</p>
+                    <p>Bu indah RT 02: 081219503808</p>
+                    <p>Bagi para Donatur/warga yang sudah menyisihkan sebagian Hartanya, kami mengucapkan terima kasih. Semoga Allah Subhanahu Wa Ta'ala membalas kebaikan Bapak/Ibu dengan pahala yang berlipat ganda Aamiin🤲</p>
+                </div>
+            </div>
+            
+            <div class="activity-card">
+                <h3 class="activity-title">Laporan Kegiatan Maulid Nabi Muhammad SAW 1447 H</h3>
+                <div class="activity-date">29 September 2025</div>
+                <div class="video-container">
+                    <!-- Tempat untuk video -->
+                    <p>[Video akan ditampilkan di sini]</p>
+                </div>
+                <div class="activity-content">
+                    <p>Assalamu'alaikum warahmatullahi wabarakatuh</p>
+                    <p>Segala puji bagi Allah Subhanahu wa Ta'ala, shalawat serta salam semoga senantiasa tercurah kepada junjungan kita Nabi Muhammad Shallallahu 'alaihi wasallam.</p>
+                    <p>Dengan penuh rasa syukur, kami panitia Maulid Nabi Muhammad SAW September 2025 menyampaikan terima kasih yang sebesar-besarnya atas dukungan dan partisipasi warga Perum Ciomas River View dalam menyukseskan acara ini.</p>
+                    <p>Alhamdulillah, berkat kebersamaan dan keikhlasan kita semua, kegiatan berjalan dengan lancar. Berikut kami sampaikan laporan ringkas:</p>
+                    <p>Donasi Maulid yang terkumpul: Rp 7.750.000,-</p>
+                    <p>Nasi kotak yang disediakan: ± 450 kotak</p>
+                    <p>Semoga setiap rupiah, tenaga, dan doa yang telah Bapak/Ibu berikan menjadi amal jariyah yang dibalas oleh Allah SWT dengan pahala yang berlipat ganda. Mari kita terus menjaga ukhuwah dan kebersamaan dalam membangun lingkungan yang penuh keberkahan.</p>
+                    <p>Wassalamu'alaikum warahmatullahi wabarakatuh</p>
+                    <p>Hormat kami,</p>
+                    <p>Panitia Maulid Nabi Muhammad SAW 1447 H / 2025 M</p>
                 </div>
             </div>
         </div>
@@ -415,14 +604,30 @@
         </div>
     </section>
 
+    <!-- Donasi -->
+    <section id="donasi" class="donation-section">
+        <div class="container">
+            <h2 class="section-title">Sumbangan / Infaq</h2>
+            <div class="donation-info">
+                <p>Bagi yang ingin berpartisipasi dalam kegiatan Masjid Al-Istiqomah, Anda dapat memberikan sumbangan/infaq melalui:</p>
+                <div class="bank-info">
+                    <strong>No. Rek. Masjid Al-Istiqomah BSI: 7970990997</strong>
+                </div>
+                <p>Klik tombol di bawah untuk langsung menuju aplikasi mobile banking:</p>
+                <a href="#" class="btn" onclick="alert('Fitur ini akan mengarahkan ke aplikasi mobile banking BSI')">Donasi Sekarang</a>
+                <p style="margin-top: 1rem;">Semoga Allah membalas kebaikan Bapak/Ibu dengan pahala yang berlipat ganda. Aamiin.</p>
+            </div>
+        </div>
+    </section>
+
     <!-- Footer -->
     <footer>
         <div class="container">
             <div class="footer-content">
                 <div class="footer-section">
                     <h3>Kontak Kami</h3>
-                    <p>Jl. Merdeka No. 123, Jakarta Pusat</p>
-                    <p>Telepon: (021) 123-4567</p>
+                    <p>Ciomas River View-RT 001 RW016 Desa Ciomas Rahayu Kecamatan Ciomas, Bogor, Jawa Barat</p>
+                    <p>Telepon: (+62) 857-7513-7180</p>
                     <p>Email: info@masjidalistiqomah.id</p>
                 </div>
                 <div class="footer-section">
@@ -430,7 +635,7 @@
                     <ul>
                         <li><a href="#">Jadwal Sholat</a></li>
                         <li><a href="#">Kajian Online</a></li>
-                        <li><a href="#">Donasi Online</a></li>
+                        <li><a href="#donasi">Donasi Online</a></li>
                         <li><a href="#">Perpustakaan Digital</a></li>
                     </ul>
                 </div>
@@ -454,9 +659,26 @@
                 </div>
             </div>
             <div class="copyright">
-                <p>&copy; 2023 Masjid Al-Istiqomah. All rights reserved.</p>
+                <p>&copy; 2025 Masjid Al-Istiqomah. All rights reserved.</p>
             </div>
         </div>
     </footer>
+
+    <script>
+        // Smooth scrolling untuk navigasi
+        document.querySelectorAll('nav a').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                window.scrollTo({
+                    top: targetElement.offsetTop - 80,
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
 </body>
 </html>
