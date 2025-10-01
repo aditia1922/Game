@@ -21,6 +21,229 @@
             overflow-x: hidden;
         }
         
+        /* Animasi Karakter Muslim */
+        .animation-container {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 150px;
+            z-index: 999;
+            pointer-events: none;
+            overflow: hidden;
+        }
+        
+        .character {
+            position: absolute;
+            bottom: 20px;
+            left: -100px;
+            width: 80px;
+            height: 120px;
+            animation: walkToMosque 25s linear infinite;
+        }
+        
+        .character-body {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .head {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 40px;
+            background: #f5d7b4;
+            border-radius: 50%;
+            z-index: 2;
+        }
+        
+        .peci {
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 45px;
+            height: 20px;
+            background: #1b5e20;
+            border-radius: 50% 50% 0 0;
+            z-index: 1;
+        }
+        
+        .body {
+            position: absolute;
+            top: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 50px;
+            background: #2e7d32;
+            border-radius: 10px;
+            z-index: 1;
+        }
+        
+        .sarung {
+            position: absolute;
+            top: 70px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 50px;
+            background: #4caf50;
+            border-radius: 5px 5px 0 0;
+            z-index: 0;
+        }
+        
+        .leg-left, .leg-right {
+            position: absolute;
+            top: 90px;
+            width: 15px;
+            height: 30px;
+            background: #1b5e20;
+            border-radius: 5px;
+            animation: walkLegs 0.5s ease-in-out infinite alternate;
+        }
+        
+        .leg-left {
+            left: 35%;
+            transform-origin: top center;
+        }
+        
+        .leg-right {
+            left: 55%;
+            transform-origin: top center;
+            animation-delay: 0.25s;
+        }
+        
+        .arm-left, .arm-right {
+            position: absolute;
+            top: 45px;
+            width: 10px;
+            height: 30px;
+            background: #f5d7b4;
+            border-radius: 5px;
+            animation: walkArms 0.5s ease-in-out infinite alternate;
+        }
+        
+        .arm-left {
+            left: 25%;
+            transform-origin: top center;
+        }
+        
+        .arm-right {
+            left: 70%;
+            transform-origin: top center;
+            animation-delay: 0.25s;
+        }
+        
+        .mosque {
+            position: absolute;
+            bottom: 0;
+            right: 10%;
+            width: 120px;
+            height: 120px;
+            z-index: 10;
+        }
+        
+        .mosque-building {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 70px;
+            background: #8d6e63;
+            border-radius: 5px 5px 0 0;
+        }
+        
+        .mosque-roof {
+            position: absolute;
+            bottom: 70px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90px;
+            height: 40px;
+            background: #d32f2f;
+            clip-path: polygon(0% 100%, 50% 0%, 100% 100%);
+        }
+        
+        .mosque-dome {
+            position: absolute;
+            bottom: 95px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 25px;
+            background: #ffc107;
+            border-radius: 50%;
+            z-index: 1;
+        }
+        
+        .mosque-minaret {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 15px;
+            height: 90px;
+            background: #8d6e63;
+            border-radius: 5px 5px 0 0;
+        }
+        
+        .mosque-minaret::after {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 15px;
+            background: #d32f2f;
+            border-radius: 50%;
+        }
+        
+        @keyframes walkToMosque {
+            0% {
+                left: -100px;
+            }
+            80% {
+                left: calc(100% - 200px);
+                opacity: 1;
+            }
+            85% {
+                opacity: 0.7;
+            }
+            90% {
+                opacity: 0.4;
+            }
+            95% {
+                opacity: 0.1;
+            }
+            100% {
+                left: calc(100% + 100px);
+                opacity: 0;
+            }
+        }
+        
+        @keyframes walkLegs {
+            0% {
+                transform: rotate(-15deg);
+            }
+            100% {
+                transform: rotate(15deg);
+            }
+        }
+        
+        @keyframes walkArms {
+            0% {
+                transform: rotate(10deg);
+            }
+            100% {
+                transform: rotate(-10deg);
+            }
+        }
+        
         /* Header dan navigasi */
         header {
             background: linear-gradient(135deg, #1b5e20 0%, #2e7d32 100%);
@@ -844,6 +1067,21 @@
                 font-size: 1rem;
                 line-height: 1.6;
             }
+            
+            /* Animasi untuk mobile */
+            .animation-container {
+                height: 100px;
+            }
+            
+            .character {
+                width: 60px;
+                height: 90px;
+            }
+            
+            .mosque {
+                width: 90px;
+                height: 90px;
+            }
         }
         
         /* PERBAIKAN: Media query untuk layar sangat kecil */
@@ -873,6 +1111,11 @@
             .footer-section h3 {
                 font-size: 1.1rem;
             }
+            
+            /* Animasi untuk layar sangat kecil */
+            .animation-container {
+                display: none; /* Sembunyikan animasi di layar sangat kecil untuk performa */
+            }
         }
         
         /* PERBAIKAN: Media query untuk orientasi landscape di mobile */
@@ -889,10 +1132,37 @@
             .hero p {
                 margin-bottom: 1rem;
             }
+            
+            .animation-container {
+                display: none; /* Sembunyikan animasi di landscape untuk ruang lebih */
+            }
         }
     </style>
 </head>
 <body>
+    <!-- Animasi Karakter Muslim -->
+    <div class="animation-container">
+        <div class="character">
+            <div class="character-body">
+                <div class="peci"></div>
+                <div class="head"></div>
+                <div class="body"></div>
+                <div class="sarung"></div>
+                <div class="leg-left"></div>
+                <div class="leg-right"></div>
+                <div class="arm-left"></div>
+                <div class="arm-right"></div>
+            </div>
+        </div>
+        
+        <div class="mosque">
+            <div class="mosque-building"></div>
+            <div class="mosque-roof"></div>
+            <div class="mosque-dome"></div>
+            <div class="mosque-minaret"></div>
+        </div>
+    </div>
+
     <!-- Header dan Navigasi -->
     <header>
         <div class="container">
@@ -1424,7 +1694,39 @@
         document.addEventListener('DOMContentLoaded', function() {
             // Tampilkan section beranda secara default
             document.getElementById('beranda').classList.add('active');
+            
+            // Tambahkan beberapa karakter animasi dengan delay berbeda
+            setTimeout(() => {
+                createCharacter(3000);
+            }, 5000);
+            
+            setTimeout(() => {
+                createCharacter(5000);
+            }, 10000);
         });
+        
+        // Fungsi untuk membuat karakter tambahan
+        function createCharacter(delay) {
+            const container = document.querySelector('.animation-container');
+            const character = document.createElement('div');
+            character.className = 'character';
+            character.style.animationDelay = `${delay}ms`;
+            
+            character.innerHTML = `
+                <div class="character-body">
+                    <div class="peci"></div>
+                    <div class="head"></div>
+                    <div class="body"></div>
+                    <div class="sarung"></div>
+                    <div class="leg-left"></div>
+                    <div class="leg-right"></div>
+                    <div class="arm-left"></div>
+                    <div class="arm-right"></div>
+                </div>
+            `;
+            
+            container.appendChild(character);
+        }
     </script>
 </body>
 </html>
