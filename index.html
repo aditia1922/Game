@@ -807,6 +807,88 @@
             .section-title {
                 font-size: 1.8rem;
             }
+            
+            /* PERBAIKAN: Video responsif untuk mobile */
+            .video-container video {
+                width: 100% !important;
+                max-width: 100%;
+                height: auto;
+            }
+            
+            /* PERBAIKAN: Tabel jadwal responsif */
+            .schedule-table {
+                display: block;
+                overflow-x: auto;
+            }
+            
+            /* PERBAIKAN: Padding dan margin untuk mobile */
+            .activity-card, .news-detail, .donation-info {
+                padding: 1.5rem;
+            }
+            
+            section {
+                padding: 2.5rem 0;
+            }
+            
+            .hero {
+                padding: 3rem 0;
+            }
+            
+            /* PERBAIKAN: Teks lebih mudah dibaca di mobile */
+            body {
+                font-size: 16px;
+                line-height: 1.5;
+            }
+            
+            .about-text p, .activity-content p, .news-detail-content p {
+                font-size: 1rem;
+                line-height: 1.6;
+            }
+        }
+        
+        /* PERBAIKAN: Media query untuk layar sangat kecil */
+        @media (max-width: 480px) {
+            .logo h1 {
+                font-size: 1.4rem;
+            }
+            
+            .hero h2 {
+                font-size: 1.8rem;
+            }
+            
+            .section-title {
+                font-size: 1.5rem;
+            }
+            
+            .bank-info {
+                font-size: 1rem;
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+            
+            .profile-item, .service-card {
+                padding: 1.2rem;
+            }
+            
+            .footer-section h3 {
+                font-size: 1.1rem;
+            }
+        }
+        
+        /* PERBAIKAN: Media query untuk orientasi landscape di mobile */
+        @media (max-height: 500px) and (orientation: landscape) {
+            .hero {
+                padding: 2rem 0;
+            }
+            
+            .hero h2 {
+                font-size: 1.8rem;
+                margin-bottom: 1rem;
+            }
+            
+            .hero p {
+                margin-bottom: 1rem;
+            }
         }
     </style>
 </head>
@@ -952,8 +1034,8 @@
                 <h3 class="activity-title">Acara Maulid Nabi Muhammad SAW 1447 H</h3>
                 <div class="activity-date">Ahad, 28 Februari 2025</div>
                 <div class="video-container">
-                    <!-- Video dengan autoplay dan suara -->
-                    <video width="19%" controls autoplay muted>
+                    <!-- PERBAIKAN: Video dengan lebar responsif -->
+                    <video controls autoplay muted playsinline>
                         <source src="assets/videos/maulid-nabi-1447h.mp4" type="video/mp4">
                         Browser Anda tidak mendukung pemutaran video.
                     </video>
@@ -977,8 +1059,8 @@
                 <h3 class="activity-title">Laporan Kegiatan Maulid Nabi Muhammad SAW 1447 H</h3>
                 <div class="activity-date">29 September 2025</div>
                 <div class="video-container">
-                    <!-- Video dengan autoplay dan suara -->
-                    <video width="10%" controls autoplay muted>
+                    <!-- PERBAIKAN: Video dengan lebar responsif -->
+                    <video controls autoplay muted playsinline>
                         <source src="assets/videos/laporan-maulid-1447h.mp4" type="video/mp4">
                         Browser Anda tidak mendukung pemutaran video.
                     </video>
